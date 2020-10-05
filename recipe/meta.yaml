@@ -15,7 +15,7 @@ build:
 
 requirements:
   run:
-    - cudatoolkit {{ cuda_version }}
+    - cudatoolkit {{ cudatoolkit }}
 
 source:
   - url: https://developer.download.nvidia.com/compute/machine-learning/repos/rhel7/ppc64le/libcudnn{{ cudnn_version.split('.')[0] }}-devel-{{ cudnn_version }}.cuda{{ cuda_version }}.ppc64le.rpm # [ppc64le]
