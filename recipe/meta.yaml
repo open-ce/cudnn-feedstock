@@ -1,10 +1,6 @@
 {% set cuda_version = cudatoolkit | replace('.*',"") %}
 {% set cudnnvars = {
   "10.2": {
-    "cudnn_version": {
-      "linux64": "8.0.4.30-1",
-      "ppc64le": "8.0.4.30-1",
-    },
     "os": "rhel7",
     "checksums": {
       "linux64": "24486c4069ad2b5b1fc8082db6bdbf6ad65825cac11a673a781a2289bad0aaf4",
@@ -16,10 +12,6 @@
     },
   },
   "11.0": {
-    "cudnn_version": {
-      "linux64": "8.0.4.30-1",
-      "ppc64le": "8.0.4.30-1",
-    },
     "os": "rhel8",
     "checksums": {
       "linux64": "caf0364d1a2466eb47028992aa12f9f119bf94e4e6da3a997e781b6e03106f99",
@@ -32,7 +24,6 @@
   },
 }
 %}
-##{% set cudnn_version = cudnnvars[cuda_version]["cudnn_version"]["ppc64le"] %}
 {% set cudnn_version = "8.0.4.30-1" %}
 {% set os = cudnnvars[cuda_version]["os"] %}
 {% set arch = "ppc64le" %}  # [ppc64le]
