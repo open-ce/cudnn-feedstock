@@ -18,7 +18,7 @@ mkdir -p $PREFIX/cuda/lib
 
 cp $RECIPE_DIR/LICENSE $PREFIX/doc/nvidia/cuDNN_LICENSE
 cp -r $SRC_DIR/cudnn/lib64/ $PREFIX/lib/
-cp -r $SRC_DIR/cudnn-dev/include/cudnn*.h $PREFIX/include/cudnn.h
+cp -r $SRC_DIR/cudnn-dev/include $PREFIX
 
 cp $SRC_DIR/cudnn-dev/lib64/libcudnn_static*.a $PREFIX/lib/libcudnn_static.a
 ln -s $PREFIX/lib/libcudnn.so.$CUDNN_VERSION $PREFIX/lib/libcudnn.so

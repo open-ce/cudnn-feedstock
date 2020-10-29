@@ -1,19 +1,18 @@
-##{% set cuda_version = cudatoolkit | replace('.*',"") %}
-{% set cuda_version = "11.0" %}
+{% set cuda_version = cudatoolkit | replace('.*',"") %}
 {% set cudnnvars = {
   "10.2": {
     "cudnn_version": {
-      "linux64": "7.6.5.32-1",
-      "ppc64le": "7.6.5.32-1",
+      "linux64": "8.0.4.30-1",
+      "ppc64le": "8.0.4.30-1",
     },
     "os": "rhel7",
     "checksums": {
-      "linux64": "317483416b6516c0fb3d38f103bdd315352625c2e16f75aa37bb2a9323dd34c1",
-      "ppc64le": "378894e78783f6866e714d85afc199c69754da71cfe8312e0163b5397c713cf4",
+      "linux64": "24486c4069ad2b5b1fc8082db6bdbf6ad65825cac11a673a781a2289bad0aaf4",
+      "ppc64le": "c7456bc1d4ce982969a6b2aeae011275bcf8fbadf7dc7cbd136f5820f0ab5fe4",
     },
     "checksums-dev": {
-      "linux64": "644d9e4206371764893408bf961afceaa9ee63175c2670fe9f8577bf5397cf7a",
-      "ppc64le": "fdf3d23bfa3ba22bef9e508473ab20affc25d5b84614475d5cbf0b40573ab04b",
+      "linux64": "5da88e8095c5ec7c911195ad930da8fc7dce213543e7360bdc073078190dfb6d",
+      "ppc64le": "f445312fc30c2ca36cf17b85b2d39817e510db867d9484af439bb80762f67eea",
     },
   },
   "11.0": {
@@ -33,7 +32,8 @@
   },
 }
 %}
-{% set cudnn_version = cudnnvars[cuda_version]["cudnn_version"]["ppc64le"] %}
+##{% set cudnn_version = cudnnvars[cuda_version]["cudnn_version"]["ppc64le"] %}
+{% set cudnn_version = "8.0.4.30-1" %}
 {% set os = cudnnvars[cuda_version]["os"] %}
 {% set arch = "ppc64le" %}  # [ppc64le]
 {% set arch = "x64_64" %}  # [x86_64]
