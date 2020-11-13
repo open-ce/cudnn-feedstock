@@ -27,7 +27,7 @@
 {% set cudnn_version = "8.0.4.30-1" %}
 {% set os = cudnnvars[cuda_version]["os"] %}
 {% set arch = "ppc64le" %}  # [ppc64le]
-{% set arch = "x64_64" %}  # [x86_64]
+{% set arch = "x86_64" %}  # [x86_64]
   
 package:
   name: cudnn
