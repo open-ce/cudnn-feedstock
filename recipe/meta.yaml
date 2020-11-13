@@ -54,7 +54,7 @@ source:
     sha256: {{ cudnnvars[cuda_version]["checksums-dev"]["ppc64le"] }} # [ppc64le]
     sha256: {{ cudnnvars[cuda_version]["checksums-dev"]["linux64"] }} # [x86_64]
     folder: cudnn-dev
-  - url: https://developer.download.nvidia.com/compute/machine-learning/repos/{{ os }}/{{ arch }}/libcudnn{{ cudnn_version.split('.')[0] }}-{{ cudnn_version }}.cuda{{ cuda_version }}.ppc64le.rpm
+  - url: https://developer.download.nvidia.com/compute/machine-learning/repos/{{ os }}/{{ arch }}/libcudnn{{ cudnn_version.split('.')[0] }}-{{ cudnn_version }}.cuda{{ cuda_version }}.{{ arch }}.rpm
     sha256: {{ cudnnvars[cuda_version]["checksums"]["ppc64le"] }} # [ppc64le]
     sha256: {{ cudnnvars[cuda_version]["checksums"]["linux64"] }} # [x86_64]
     folder: cudnn
