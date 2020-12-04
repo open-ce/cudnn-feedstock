@@ -1,0 +1,6 @@
+recipes:
+  - name : cudnn7.6
+    path : cudnn7.6
+
+  - name : cudnn8.0
+    path : cudnn8.0

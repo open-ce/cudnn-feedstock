@@ -1,0 +1,46 @@
+{% set cudnn_version = "7.6.5.32-1" %}
+{% set cudnn_version_x86 = "7.6.5.33-1" %}
+{% set cuda_version = cudatoolkit | replace('.*',"") %}
+{% set dev_sha256_ppc = "fdf3d23bfa3ba22bef9e508473ab20affc25d5b84614475d5cbf0b40573ab04b" %}
+{% set sha256_ppc = "378894e78783f6866e714d85afc199c69754da71cfe8312e0163b5397c713cf4" %}
+{% set dev_sha256_x86 = "644d9e4206371764893408bf961afceaa9ee63175c2670fe9f8577bf5397cf7a" %}
+{% set sha256_x86 = "317483416b6516c0fb3d38f103bdd315352625c2e16f75aa37bb2a9323dd34c1" %}
+
+package:
+  name: cudnn
+  version: {{ cudnn_version.rsplit('.', 1)[0] + "_" + cuda_version }}
+
+build:
+  number: 1
+
+requirements:
+  run:
+    - cudatoolkit {{ cudatoolkit }}
+
+source:
+  - url: https://developer.download.nvidia.com/compute/machine-learning/repos/rhel7/ppc64le/libcudnn{{ cudnn_version.split('.')[0] }}-devel-{{ cudnn_version }}.cuda{{ cuda_version }}.ppc64le.rpm # [ppc64le]
+    sha256: {{ dev_sha256_ppc }} # [ppc64le]
+    folder: cudnn-dev # [ppc64le]
+  - url: https://developer.download.nvidia.com/compute/machine-learning/repos/rhel7/ppc64le/libcudnn{{ cudnn_version.split('.')[0] }}-{{ cudnn_version }}.cuda{{ cuda_version }}.ppc64le.rpm # [ppc64le]
+    sha256: {{ sha256_ppc }} # [ppc64le]
+    folder: cudnn # [ppc64le]
+
+  - url: https://developer.download.nvidia.com/compute/machine-learning/repos/rhel7/x86_64/libcudnn{{ cudnn_version_x86.split('.')[0] }}-devel-{{ cudnn_version_x86 }}.cuda{{ cuda_version }}.x86_64.rpm # [x86_64]           
+    sha256: {{ dev_sha256_x86 }} # [x86_64]
+    folder: cudnn-dev # [x86_64]
+  - url: https://developer.download.nvidia.com/compute/machine-learning/repos/rhel7/x86_64/libcudnn{{ cudnn_version_x86.split('.')[0] }}-{{ cudnn_version_x86 }}.cuda{{ cuda_version }}.x86_64.rpm # [x86_64]        
+    sha256: {{ sha256_x86 }} # [x86_64]
+    folder: cudnn # [x86_64]
+
+test:
+  commands:
+    - test -f ${PREFIX}/lib/libcudnn.so
+    - test -f ${PREFIX}/lib/libcudnn_static.a
+
+about: 
+    license_file: LICENSE
+    summary: The NVIDIA CUDA Deep Neural Network library. A GPU-accelerated library of primitives for deep neural networks.
+
+extra:
+  recipe-maintainers:
+    - open-ce/open-ce-dev-team
