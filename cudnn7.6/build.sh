@@ -18,9 +18,14 @@ mkdir -p $PREFIX/cuda/lib
 
 cp $RECIPE_DIR/LICENSE $PREFIX/doc/nvidia/cuDNN_LICENSE
 cp -r $SRC_DIR/cudnn/lib64/ $PREFIX/lib/
-cp -r $SRC_DIR/cudnn-dev/include/cudnn*.h $PREFIX/include/cudnn.h
 
+# The dev RPM package has version subscripts meant to be used for
+# the `alternatives` facility in Linux. No need for that here
+# so we strip them out of the file names during the copy.
+
+cp -r $SRC_DIR/cudnn-dev/include/cudnn*.h $PREFIX/include/cudnn.h
 cp $SRC_DIR/cudnn-dev/lib64/libcudnn_static*.a $PREFIX/lib/libcudnn_static.a
+
 ln -s $PREFIX/lib/libcudnn.so.$CUDNN_VERSION $PREFIX/lib/libcudnn.so
 
 for link_loc in lib64 cuda/lib; do
