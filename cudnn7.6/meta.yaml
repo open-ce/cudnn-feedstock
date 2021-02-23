@@ -38,7 +38,8 @@ test:
     - test -f ${PREFIX}/lib/libcudnn_static.a
 
 about: 
-    license: Proprietary
+    license: proprietary - NVIDIA
+    license_family: Proprietary
     license_file: LICENSE
     summary: The NVIDIA CUDA Deep Neural Network library. A GPU-accelerated library of primitives for deep neural networks.
     description: The NVIDIA CUDA Deep Neural Network library. A GPU-accelerated library of primitives for deep neural networks.
