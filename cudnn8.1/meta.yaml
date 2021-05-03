@@ -1,0 +1,86 @@
+{% set cuda_version = cudatoolkit | replace('.*',"") %}
+{% set cudnnvars = {
+  "10.2": {
+    "os": "rhel7",
+    "checksums": {
+      "linux64": "24486c4069ad2b5b1fc8082db6bdbf6ad65825cac11a673a781a2289bad0aaf4",
+      "ppc64le": "c7456bc1d4ce982969a6b2aeae011275bcf8fbadf7dc7cbd136f5820f0ab5fe4",
+    },
+    "checksums-dev": {
+      "linux64": "5da88e8095c5ec7c911195ad930da8fc7dce213543e7360bdc073078190dfb6d",
+      "ppc64le": "f445312fc30c2ca36cf17b85b2d39817e510db867d9484af439bb80762f67eea",
+    },
+  },
+  "11.0": {
+    "os": "rhel8",
+    "checksums": {
+      "linux64": "caf0364d1a2466eb47028992aa12f9f119bf94e4e6da3a997e781b6e03106f99",
+      "ppc64le": "55c6a64437a559eb1fdabcd1b176eb343030a9c18b92a0207328562a6b75e712",
+    },
+    "checksums-dev": {
+      "linux64": "d1287669c2a777b49da1a7610c584cdb23c41680e7b76296002bcde0b79fde52",
+      "ppc64le": "ae2cfea83dd3d3c529368c6e97e68f071d98ab8bb481fb0994729e065fd335b8",
+    },
+  },
+  "11.2": {
+    "os": "rhel8",
+    "checksums": {
+      "linux64": "0b878c20fb573ed7894695cb7f70bdebe1805179824c6ab99a874a7242489c33",
+      "ppc64le": "4e7fad68df8f50ca33c4f5ee4cec07238993dccf4ed0b6f7e07150e34f4da351",
+    },
+    "checksums-dev": {
+      "linux64": "6e2d6549e39a4e024d2c4b0a74ee0a890390c3222ff654c2ab1b3c6cf69b7f05",
+      "ppc64le": "c0fe0506696cc3062623efdabb8350ba344e1195319ac1aa66aaa54cd215d9ff",
+    },
+  },
+
+}
+%}
+{% set cudnn_version = "8.1.0.77-1" %}
+{% set os = cudnnvars[cuda_version]["os"] %}
+{% set arch = "ppc64le" %}  # [ppc64le]
+{% set arch = "x86_64" %}  # [x86_64]
+{% set cudnn_rpm_dir =  environ.get('LOCAL_SRC_DIR', 0) %}
+  
+package:
+  name: cudnn
+  version: {{ cudnn_version.rsplit('.', 1)[0] + "_" + cuda_version }}
+
+build:
+  number: 1
+  missing_dso_whitelist:
+          - "*/libstdc++.so.6"      
+          - "*/libm.so.6"      
+          - "*/librt.so.1"      
+          - "*/libpthread.so.0"      
+          - "*/libdl.so.2"      
+          - "*/libgcc_s.so.1"      
+          - "*/libc.so.6"      
+          - "*/ld64.so.2"      
+
+requirements:
+  run:
+    - cudatoolkit {{ cudatoolkit }}
+
+source:
+  - url: file:/{{ cudnn_rpm_dir }}/libcudnn{{ cudnn_version.split('.')[0] }}-devel-{{ cudnn_version }}.cuda{{ cuda_version }}.{{ arch }}.rpm
+    sha256: {{ cudnnvars[cuda_version]["checksums-dev"]["ppc64le"] }} # [ppc64le]
+    sha256: {{ cudnnvars[cuda_version]["checksums-dev"]["linux64"] }} # [x86_64]
+    folder: cudnn-dev
+  - url: file:/{{ cudnn_rpm_dir }}/libcudnn{{ cudnn_version.split('.')[0] }}-{{ cudnn_version }}.cuda{{ cuda_version }}.{{ arch }}.rpm
+    sha256: {{ cudnnvars[cuda_version]["checksums"]["ppc64le"] }} # [ppc64le]
+    sha256: {{ cudnnvars[cuda_version]["checksums"]["linux64"] }} # [x86_64]
+    folder: cudnn
+
+test:
+  commands:
+    - test -f ${PREFIX}/lib/libcudnn.so
+    - test -f ${PREFIX}/lib/libcudnn_static.a
+
+about: 
+    license_file: LICENSE
+    summary: The NVIDIA CUDA Deep Neural Network library. A GPU-accelerated library of primitives for deep neural networks.
+
+extra:
+  recipe-maintainers:
+    - open-ce/open-ce-dev-team

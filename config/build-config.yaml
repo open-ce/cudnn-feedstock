@@ -8,3 +8,9 @@ recipes:
   - name : cudnn8.0
     path : cudnn8.0
 {% endif %}
+
+{% if cudatoolkit == '11.2' %}
+  - name : cudnn8.1
+    path : cudnn8.1
+    local_src_dir: ../../local_files
+{% endif %}
