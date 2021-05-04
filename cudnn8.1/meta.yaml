@@ -1,7 +1,9 @@
 {% set cuda_version = cudatoolkit | replace('.*',"") %}
+{% set cuda_major_version = ".".join(cuda_version.split("."))[:2] %}
 {% set cudnnvars = {
-  "10.2": {
+  "10": {
     "os": "rhel7",
+    "version": "10.2",
     "checksums": {
       "linux64": "dfe21629676e227d52e147cfb133edcd2df79147cdd5e8ca530d7d634ab61c2f",
     },
@@ -9,8 +11,9 @@
       "linux64": "0dfb7fdfa960cb560db4067bdb4b4c49911d95cf0169edd8c9793870a8ea73e4",
     },
   },
-  "11.0": {
+  "11": {
     "os": "rhel8",
+    "version": "11.2",
     "checksums": {
       "linux64": "0b878c20fb573ed7894695cb7f70bdebe1805179824c6ab99a874a7242489c33",
       "ppc64le": "4e7fad68df8f50ca33c4f5ee4cec07238993dccf4ed0b6f7e07150e34f4da351",
@@ -20,22 +23,11 @@
       "ppc64le": "c0fe0506696cc3062623efdabb8350ba344e1195319ac1aa66aaa54cd215d9ff",
     },
   },
-  "11.2": {
-    "os": "rhel8",
-    "checksums": {
-      "linux64": "0b878c20fb573ed7894695cb7f70bdebe1805179824c6ab99a874a7242489c33",
-      "ppc64le": "4e7fad68df8f50ca33c4f5ee4cec07238993dccf4ed0b6f7e07150e34f4da351",
-    },
-    "checksums-dev": {
-      "linux64": "6e2d6549e39a4e024d2c4b0a74ee0a890390c3222ff654c2ab1b3c6cf69b7f05",
-      "ppc64le": "c0fe0506696cc3062623efdabb8350ba344e1195319ac1aa66aaa54cd215d9ff",
-    },
-  },
-
 }
 %}
+
 {% set cudnn_version = "8.1.0.77-1" %}
-{% set os = cudnnvars[cuda_version]["os"] %}
+{% set os = cudnnvars[cuda_major_version]["os"] %}
 {% set arch = "ppc64le" %}  # [ppc64le]
 {% set arch = "x86_64" %}  # [x86_64]
 {% set cudnn_rpm_dir =  environ.get('LOCAL_SRC_DIR', 0) %}
@@ -61,13 +53,13 @@ requirements:
     - cudatoolkit {{ cudatoolkit }}
 
 source:
-  - url: file:/{{ cudnn_rpm_dir }}/libcudnn{{ cudnn_version.split('.')[0] }}-devel-{{ cudnn_version }}.cuda{{ cuda_version }}.{{ arch }}.rpm
-    sha256: {{ cudnnvars[cuda_version]["checksums-dev"]["ppc64le"] }} # [ppc64le]
-    sha256: {{ cudnnvars[cuda_version]["checksums-dev"]["linux64"] }} # [x86_64]
+  - url: file:/{{ cudnn_rpm_dir }}/libcudnn{{ cudnn_version.split('.')[0] }}-devel-{{ cudnn_version }}.cuda{{ cudnnvars[cuda_major_version]["version"] }}.{{ arch }}.rpm
+    sha256: {{ cudnnvars[cuda_major_version]["checksums-dev"]["ppc64le"] }} # [ppc64le]
+    sha256: {{ cudnnvars[cuda_major_version]["checksums-dev"]["linux64"] }} # [x86_64]
     folder: cudnn-dev
-  - url: file:/{{ cudnn_rpm_dir }}/libcudnn{{ cudnn_version.split('.')[0] }}-{{ cudnn_version }}.cuda{{ cuda_version }}.{{ arch }}.rpm
-    sha256: {{ cudnnvars[cuda_version]["checksums"]["ppc64le"] }} # [ppc64le]
-    sha256: {{ cudnnvars[cuda_version]["checksums"]["linux64"] }} # [x86_64]
+  - url: file:/{{ cudnn_rpm_dir }}/libcudnn{{ cudnn_version.split('.')[0] }}-{{ cudnn_version }}.cuda{{ cudnnvars[cuda_major_version]["version"] }}.{{ arch }}.rpm
+    sha256: {{ cudnnvars[cuda_major_version]["checksums"]["ppc64le"] }} # [ppc64le]
+    sha256: {{ cudnnvars[cuda_major_version]["checksums"]["linux64"] }} # [x86_64]
     folder: cudnn
 
 test:
