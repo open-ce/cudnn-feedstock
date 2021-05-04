@@ -3,12 +3,10 @@
   "10.2": {
     "os": "rhel7",
     "checksums": {
-      "linux64": "24486c4069ad2b5b1fc8082db6bdbf6ad65825cac11a673a781a2289bad0aaf4",
-      "ppc64le": "c7456bc1d4ce982969a6b2aeae011275bcf8fbadf7dc7cbd136f5820f0ab5fe4",
+      "linux64": "dfe21629676e227d52e147cfb133edcd2df79147cdd5e8ca530d7d634ab61c2f",
     },
     "checksums-dev": {
-      "linux64": "5da88e8095c5ec7c911195ad930da8fc7dce213543e7360bdc073078190dfb6d",
-      "ppc64le": "f445312fc30c2ca36cf17b85b2d39817e510db867d9484af439bb80762f67eea",
+      "linux64": "0dfb7fdfa960cb560db4067bdb4b4c49911d95cf0169edd8c9793870a8ea73e4",
     },
   },
   "11.0": {
