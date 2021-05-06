@@ -31,7 +31,7 @@ cp -r $SRC_DIR/cudnn/lib64/ $PREFIX/lib/
 rename _v8 '' $SRC_DIR/cudnn/include/*
 cp -r $SRC_DIR/cudnn/include $PREFIX
 
-#ln -s $PREFIX/lib/libcudnn_static.a $PREFIX/lib64/libcudnn_static.a
+ln -s $PREFIX/lib/libcudnn_static.a $PREFIX/lib64/libcudnn_static.a
 for f in $SRC_DIR/cudnn/lib64/*.so*; do
     filename=`basename $f`
     ln -s $PREFIX/lib/$filename $PREFIX/lib64/$filename
