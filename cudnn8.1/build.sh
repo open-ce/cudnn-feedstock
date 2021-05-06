@@ -19,13 +19,19 @@ CUDNN_VERSION=${PKG_VERSION%%_*}
 mkdir $PREFIX/include
 mkdir -p $PREFIX/doc/nvidia/
 
+SUB_DIR="cudnn"
+ARCH=`uname -p`
+if [[ "${ARCH}" == 'ppc64le' ]]; then
+        SUB_DIR="${SUB_DIR}/targets/ppc64le-linux"
+fi
+
 cp $RECIPE_DIR/LICENSE $PREFIX/doc/nvidia/cuDNN_LICENSE
-cp -r $SRC_DIR/cudnn/lib64/ $PREFIX/lib/
+cp -r $SRC_DIR/${SUB_DIR}/lib*/ $PREFIX/lib/
 
 
 # The archive has version subscripts meant to be used for
 # the `alternatives` facility in Linux. No need for that here
 # so we strip them out of the file names.
 
-rename _v8 '' $SRC_DIR/cudnn/include/*
-cp -r $SRC_DIR/cudnn/include $PREFIX
+rename _v8 '' $SRC_DIR/${SUB_DIR}/include/*
+cp -r $SRC_DIR/${SUB_DIR}/include $PREFIX
