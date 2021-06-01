@@ -34,7 +34,7 @@ package:
   version: {{ cudnn_version.rsplit('.', 1)[0] + "_" + cuda_version }}
 
 build:
-  number: 1
+  number: 2
   missing_dso_whitelist:
           - "*/libstdc++.so.6"      
           - "*/libm.so.6"      
@@ -65,8 +65,11 @@ test:
     - test -f ${PREFIX}/lib/libcudnn_static.a
 
 about: 
+    license: NVIDIA Software License
+    license_family: Proprietary
     license_file: LICENSE
     summary: The NVIDIA CUDA Deep Neural Network library. A GPU-accelerated library of primitives for deep neural networks.
+    description: The NVIDIA CUDA Deep Neural Network library. A GPU-accelerated library of primitives for deep neural networks.
 
 extra:
   recipe-maintainers:
