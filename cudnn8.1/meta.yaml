@@ -1,14 +1,12 @@
-{% set version = "8.1.0.77" %}
+{% set version = "8.1.1.33" %}
 {% set cuda_version = cudatoolkit | replace('.*',"") %}
-{% set cuda_major_version = ".".join(cuda_version.split("."))[:2] %}
 
-{% set cudnn_version = "8.1.0.77-1" %}
 {% set arch = "ppc64le" %}  # [ppc64le]
-{% set arch = "x86_64" %}  # [x86_64]
+{% set arch = "x64" %}  # [x86_64]
   
 package:
   name: cudnn
-  version: {{ cudnn_version.rsplit('.', 1)[0] + "_" + cuda_version }}
+  version: {{ version.rsplit('.', 1)[0] + "_" + cuda_version }}
 
 build:
   number: 1
@@ -27,18 +25,13 @@ requirements:
     - cudatoolkit {{ cudatoolkit }}
 
 source:
-  url: https://developer.download.nvidia.com/compute/redist/cudnn/v{{ ".".join(version.split(".")[:3]) }}/cudnn-{{ cuda_version }}-linux-x64-v{{ version }}.tgz  # [linux64]
-  url: https://developer.download.nvidia.com/compute/redist/cudnn/v{{ ".".join(version.split(".")[:3]) }}/cudnn-{{ cuda_version }}-linux-ppc64le-v{{ version }}.tgz  # [ppc64le]
-  sha256: c5bc617d89198b0fbe485156446be15a08aee37f7aff41c797b120912f2b14b4  # [linux64 and cuda_version == "10.2"]
-  sha256: dbe82faf071d91ba9bcf00480146ad33f462482dfee56caf4479c1b8dabe3ecb  # [linux64 and cuda_version == "11.2"]
+  url: https://developer.download.nvidia.com/compute/redist/cudnn/v{{ ".".join(version.split(".")[:3]) }}/cudnn-{{ cuda_version }}-linux-{{ arch }}-v{{ version }}.tgz
+  sha256: 98a8784e92862f20018d20c281b30d4a0cd951f93694f6433ccf4ae9c502ba6a  # [x86_64]
+  sha256: c3e535a5d633ad8f4d50be0b6f8efd084c6c6ed3525c07cbd89fc508b1d76c7a  # [ppc64le]
   folder: cudnn
 
 test:
   commands:
-#    - test -f $PREFIX/include/cudnn.h                  # [linux]
-#    - test -f $PREFIX/include/cudnn_adv_train.h        # [linux]
-#    - test -f $PREFIX/lib/libcudnn.so                  # [linux]
-#    - test -f $PREFIX/lib/libcudnn_adv_train.so        # [linux]
     - test -f ${PREFIX}/lib/libcudnn.so
     - test -f ${PREFIX}/lib/libcudnn_static.a
 
