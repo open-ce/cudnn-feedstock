@@ -1,16 +1,8 @@
 recipes:
 {% if cudatoolkit == '10.2' %}
-  - name : cudnn7.6
-    path : cudnn7.6
-{% endif %}
-
-{% if cudatoolkit == '11.0' %}
-  - name : cudnn8.0
-    path : cudnn8.0
-{% endif %}
-
-{% if cudatoolkit == '11.2' %}
+  - name : cudnn8.0.5
+    path : cudnn8.0.5
+{% else %}
   - name : cudnn8.1
     path : cudnn8.1
 {% endif %}
-
