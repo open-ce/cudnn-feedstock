@@ -25,7 +25,7 @@ requirements:
     - cudatoolkit {{ cudatoolkit }}
 
 source:
-  url: https://developer.download.nvidia.com/compute/redist/cudnn/v{{ ".".join(version.split(".")[:3]) }}/cudnn-{{ cuda_version }}-linux-{{ arch }}-v{{ version }}.tgz
+  url: https://developer.download.nvidia.com/compute/redist/cudnn/v{{ ".".join(version.split(".")[:3]) }}/cudnn-11.2-linux-{{ arch }}-v{{ version }}.tgz
   sha256: 98a8784e92862f20018d20c281b30d4a0cd951f93694f6433ccf4ae9c502ba6a  # [x86_64]
   sha256: c3e535a5d633ad8f4d50be0b6f8efd084c6c6ed3525c07cbd89fc508b1d76c7a  # [ppc64le]
   folder: cudnn
