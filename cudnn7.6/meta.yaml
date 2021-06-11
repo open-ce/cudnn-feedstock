@@ -11,7 +11,7 @@ package:
   version: {{ cudnn_version.rsplit('.', 1)[0] + "_" + cuda_version }}
 
 build:
-  number: 3
+  number: 4
 
 requirements:
   run:
@@ -33,6 +33,10 @@ source:
     folder: cudnn # [x86_64]
 
 test:
+  requires:
+  #Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
   commands:
     - test -f ${PREFIX}/lib/libcudnn.so
     - test -f ${PREFIX}/lib/libcudnn_static.a

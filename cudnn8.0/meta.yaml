@@ -34,7 +34,7 @@ package:
   version: {{ cudnn_version.rsplit('.', 1)[0] + "_" + cuda_version }}
 
 build:
-  number: 2
+  number: 3
   missing_dso_whitelist:
           - "*/libstdc++.so.6"      
           - "*/libm.so.6"      
@@ -60,6 +60,10 @@ source:
     folder: cudnn
 
 test:
+  requires:
+  #Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
   commands:
     - test -f ${PREFIX}/lib/libcudnn.so
     - test -f ${PREFIX}/lib/libcudnn_static.a
