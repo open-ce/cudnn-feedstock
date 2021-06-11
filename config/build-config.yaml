@@ -8,4 +8,3 @@ recipes:
   - name : cudnn8.0
     path : cudnn8.0
 {% endif %}                     #[build_type == 'cuda']
-{% endif %}
