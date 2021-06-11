@@ -1,10 +1,11 @@
 recipes:
-{% if cudatoolkit == '10.2' %}
+{% if cudatoolkit == '10.2' %}   #[build_type == 'cuda']
   - name : cudnn7.6
     path : cudnn7.6
-{% endif %}
+{% endif %}                      #[build_type == 'cuda']
 
-{% if cudatoolkit == '11.0' %}
+{% if cudatoolkit == '11.0' %}  #[build_type == 'cuda']
   - name : cudnn8.0
     path : cudnn8.0
+{% endif %}                     #[build_type == 'cuda']
 {% endif %}
