@@ -35,6 +35,9 @@ package:
 
 build:
   number: 3
+  ignore_run_exports:
+    - libgcc-ng
+    - libstdcxx-ng
   missing_dso_whitelist:
           - "*/libstdc++.so.6"      
           - "*/libm.so.6"      
@@ -48,6 +51,9 @@ build:
 requirements:
   run:
     - cudatoolkit {{ cudatoolkit }}
+    #Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
 
 source:
   - url: https://developer.download.nvidia.com/compute/machine-learning/repos/{{ os }}/{{ arch }}/libcudnn{{ cudnn_version.split('.')[0] }}-devel-{{ cudnn_version }}.cuda{{ cuda_version }}.{{ arch }}.rpm
@@ -60,10 +66,6 @@ source:
     folder: cudnn
 
 test:
-  requires:
-  #Use pins to control cos6/cos7 match
-    - libgcc-ng  {{ libgcc }}
-    - libstdcxx-ng  {{ libstdcxx }}
   commands:
     - test -f ${PREFIX}/lib/libcudnn.so
     - test -f ${PREFIX}/lib/libcudnn_static.a
