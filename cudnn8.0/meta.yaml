@@ -1,4 +1,4 @@
-{% set cuda_version = cudatoolkit | replace('.*',"") %}                     #[build_type == 'cuda']
+{% set cuda_version = cudatoolkit | replace('.*',"") %}
 {% set cudnnvars = {
   "10.2": {
     "os": "rhel7",
@@ -25,13 +25,13 @@
 }
 %}
 {% set cudnn_version = "8.0.4.30-1" %}
-{% set os = cudnnvars[cuda_version]["os"] %}                              #[build_type == 'cuda']
+{% set os = cudnnvars[cuda_version]["os"] %}
 {% set arch = "ppc64le" %}  # [ppc64le]
 {% set arch = "x86_64" %}  # [x86_64]
   
 package:
   name: cudnn
-  version: {{ cudnn_version.rsplit('.', 1)[0] + "_" + cuda_version }}     #[build_type == 'cuda']
+  version: {{ cudnn_version.rsplit('.', 1)[0] + "_" + cuda_version }}
 
 build:
   number: 3
@@ -47,16 +47,16 @@ build:
 
 requirements:
   run:
-    - cudatoolkit {{ cudatoolkit }}                   #[build_type == 'cuda']
+    - cudatoolkit {{ cudatoolkit }}
 
 source:
-  - url: https://developer.download.nvidia.com/compute/machine-learning/repos/{{ os }}/{{ arch }}/libcudnn{{ cudnn_version.split('.')[0] }}-devel-{{ cudnn_version }}.cuda{{ cuda_version }}.{{ arch }}.rpm                        #[build_type == 'cuda']
-    sha256: {{ cudnnvars[cuda_version]["checksums-dev"]["ppc64le"] }} # [ppc64le and build_type == 'cuda']
-    sha256: {{ cudnnvars[cuda_version]["checksums-dev"]["linux64"] }} # [x86_64 and build_type == 'cuda']
+  - url: https://developer.download.nvidia.com/compute/machine-learning/repos/{{ os }}/{{ arch }}/libcudnn{{ cudnn_version.split('.')[0] }}-devel-{{ cudnn_version }}.cuda{{ cuda_version }}.{{ arch }}.rpm
+    sha256: {{ cudnnvars[cuda_version]["checksums-dev"]["ppc64le"] }} # [ppc64le]
+    sha256: {{ cudnnvars[cuda_version]["checksums-dev"]["linux64"] }} # [x86_64]
     folder: cudnn-dev
-  - url: https://developer.download.nvidia.com/compute/machine-learning/repos/{{ os }}/{{ arch }}/libcudnn{{ cudnn_version.split('.')[0] }}-{{ cudnn_version }}.cuda{{ cuda_version }}.{{ arch }}.rpm                              #[build_type == 'cuda']
-    sha256: {{ cudnnvars[cuda_version]["checksums"]["ppc64le"] }} # [ppc64le and build_type == 'cuda']
-    sha256: {{ cudnnvars[cuda_version]["checksums"]["linux64"] }} # [x86_64 and build_type == 'cuda']
+  - url: https://developer.download.nvidia.com/compute/machine-learning/repos/{{ os }}/{{ arch }}/libcudnn{{ cudnn_version.split('.')[0] }}-{{ cudnn_version }}.cuda{{ cuda_version }}.{{ arch }}.rpm
+    sha256: {{ cudnnvars[cuda_version]["checksums"]["ppc64le"] }} # [ppc64le]
+    sha256: {{ cudnnvars[cuda_version]["checksums"]["linux64"] }} # [x86_64]
     folder: cudnn
 
 test:
