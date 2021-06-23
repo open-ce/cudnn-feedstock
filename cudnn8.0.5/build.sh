@@ -18,28 +18,20 @@
 CUDNN_VERSION=${PKG_VERSION%%_*}
 mkdir $PREFIX/include
 mkdir -p $PREFIX/doc/nvidia/
-mkdir -p $PREFIX/lib64
-mkdir -p $PREFIX/cuda/lib
+
+SUB_DIR="cudnn"
+ARCH=`uname -p`
+if [[ "${ARCH}" == 'ppc64le' ]]; then
+        SUB_DIR="${SUB_DIR}/targets/ppc64le-linux"
+fi
 
 cp $RECIPE_DIR/LICENSE $PREFIX/doc/nvidia/cuDNN_LICENSE
-cp -r $SRC_DIR/cudnn/lib64/ $PREFIX/lib/
+cp -r $SRC_DIR/${SUB_DIR}/lib*/ $PREFIX/lib/
 
 
-# The dev RPM package has version subscripts meant to be used for
+# The archive has version subscripts meant to be used for
 # the `alternatives` facility in Linux. No need for that here
 # so we strip them out of the file names.
 
-rename _v8 '' $SRC_DIR/cudnn-dev/include/*
-cp $SRC_DIR/cudnn-dev/lib64/libcudnn_static*.a $PREFIX/lib/libcudnn_static.a
-cp -r $SRC_DIR/cudnn-dev/include $PREFIX
-
-ln -s $PREFIX/lib/libcudnn.so.$CUDNN_VERSION $PREFIX/lib/libcudnn.so
-
-for link_loc in lib64 cuda/lib; do
-    ln -s $PREFIX/lib/libcudnn.so.$CUDNN_VERSION $PREFIX/$link_loc/libcudnn.so
-    ln -s $PREFIX/lib/libcudnn_static.a $PREFIX/$link_loc/libcudnn_static.a
-    for f in $SRC_DIR/cudnn/lib64/*.so*; do
-        filename=`basename $f`
-        ln -s $PREFIX/lib/$filename $PREFIX/$link_loc/$filename
-    done
-done
+rename _v8 '' $SRC_DIR/${SUB_DIR}/include/*
+cp -r $SRC_DIR/${SUB_DIR}/include $PREFIX
