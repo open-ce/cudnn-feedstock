@@ -1,4 +1,4 @@
-{% set version = "8.0.5.39" %}
+{% set version = "8.3.0.98" %}
 {% set cuda_version = cudatoolkit | replace('.*',"") %}
 
 {% set arch = "ppc64le" %}  # [ppc64le]
@@ -25,15 +25,14 @@ requirements:
     - cudatoolkit {{ cudatoolkit }}
 
 source:
-  url: https://developer.download.nvidia.com/compute/redist/cudnn/v{{ ".".join(version.split(".")[:3]) }}/cudnn-{{ cuda_version }}-linux-{{ arch }}-v{{ version }}.tgz
-  sha256: 21f84c05c67bf1ec859e77c38ccd5bf154964fa1c308f449959be4c356e382f3  # [x86_64]
-  sha256: ce128ea090b05e36d00ffe921e45982ca10e8207e40cfc2e0067d0f62d9b36f9  # [ppc64le]
+  url: https://developer.download.nvidia.com/compute/redist/cudnn/v{{ ".".join(version.split(".")[:3]) }}/cudnn-11.5-linux-{{ arch }}-v{{ version }}.tgz
+  sha256: 44c6f5ad5cb12fb74fa0c9a1e7caaf4f04d755adf11a2e5b6c9e417da376b2b2  # [x86_64]
+  sha256: c3fd57c06f625139edd3788493925089ad8148599bffc22f6f9948370e5850ee  # [ppc64le]
   folder: cudnn
 
 test:
   commands:
     - test -f ${PREFIX}/lib/libcudnn.so
-    - test -f ${PREFIX}/lib/libcudnn_static.a
 
 about: 
     license_file: LICENSE
