@@ -1,0 +1,43 @@
+{% set version = "8.8.1.3" %}
+{% set cuda_version = cudatoolkit | replace('.*',"") %}
+{% set cuda_major = cuda_version.split('.')[0] %}
+{% set arch = "ppc64le" %}  # [ppc64le]
+{% set arch = "x86_64" %}  # [x86_64]
+  
+package:
+  name: cudnn
+  version: {{ version.rsplit('.', 1)[0] + "_" + cuda_version }}
+
+build:
+  number: 1
+  missing_dso_whitelist:
+          - "*/libstdc++.so.6"      
+          - "*/libm.so.6"      
+          - "*/librt.so.1"      
+          - "*/libpthread.so.0"      
+          - "*/libdl.so.2"      
+          - "*/libgcc_s.so.1"      
+          - "*/libc.so.6"      
+          - "*/ld*64.so.2"    
+
+requirements:
+  run:
+    - cudatoolkit {{ cudatoolkit }}
+
+source:
+  url: https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-{{ arch }}/cudnn-linux-{{ arch }}-{{ version }}_cuda{{ cuda_major }}-archive.tar.xz
+  sha256: af7584cae0cc5524b5913ef08c29ba6154113c60eb0a37a0590a91b515a8a8f9  # [x86_64]
+  sha256: d086003d09d5388aa42142f07483a773aa74b602478b0933e24fc63f56f1658f  # [ppc64le]
+  folder: cudnn
+
+test:
+  commands:
+    - test -f ${PREFIX}/lib/libcudnn.so
+
+about: 
+    license_file: LICENSE
+    summary: The NVIDIA CUDA Deep Neural Network library. A GPU-accelerated library of primitives for deep neural networks.
+
+extra:
+  recipe-maintainers:
+    - open-ce/open-ce-dev-team

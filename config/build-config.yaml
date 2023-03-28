@@ -2,4 +2,8 @@ recipes:
 {% if build_type == 'cuda' %}
   - name : cudnn8.3
     path : cudnn8.3
+
+  - name : cudnn8.8
+    path : cudnn8.8
+
 {% endif %}
