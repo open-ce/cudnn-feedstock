@@ -1,9 +1,0 @@
-recipes:
-{% if build_type == 'cuda' %}
-  - name : cudnn8.3      #[cudatoolkit == '11.2']
-    path : cudnn8.3      #[cudatoolkit == '11.2']
-
-  - name : cudnn8.8      #[cudatoolkit == '11.8']
-    path : cudnn8.8      #[cudatoolkit == '11.8']
-
-{% endif %}
