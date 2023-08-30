@@ -26,8 +26,10 @@ requirements:
 
 source:
   url: https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-{{ arch }}/cudnn-linux-{{ arch }}-{{ version }}_cuda{{ cuda_major }}-archive.tar.xz
-  sha256: 79d77a769c7e7175abc7b5c2ed5c494148c0618a864138722c887f95c623777c  # [x86_64]
-  sha256: d086003d09d5388aa42142f07483a773aa74b602478b0933e24fc63f56f1658f  # [ppc64le]
+  sha256: 79d77a769c7e7175abc7b5c2ed5c494148c0618a864138722c887f95c623777c  # [x86_64 and cudatoolkit == '12.2']
+  sha256: af7584cae0cc5524b5913ef08c29ba6154113c60eb0a37a0590a91b515a8a8f9  # [x86_64 and cudatoolkit == '11.8']
+  sha256: d086003d09d5388aa42142f07483a773aa74b602478b0933e24fc63f56f1658f  # [ppc64le and cudatoolkit == '11.8']
+  sha256: b0e89021a846952cad8cfc674edce2883f6e344ebd47a2394f706b1136715bc7  # [ppc64le and cudatoolkit == '12.2']
   folder: cudnn
 
 test:
