@@ -1,4 +1,4 @@
-{% set version = "8.8.1.3" %}
+{% set version = "8.9.2.26" %}
 {% set cuda_version = cudatoolkit | replace('.*',"") %}
 {% set cuda_major = cuda_version.split('.')[0] %}
 {% set arch = "ppc64le" %}  # [ppc64le]
@@ -9,7 +9,7 @@ package:
   version: {{ version.rsplit('.', 1)[0] + "_" + cuda_version }}
 
 build:
-  number: 2
+  number: 1
   missing_dso_whitelist:
           - "*/libstdc++.so.6"      
           - "*/libm.so.6"      
@@ -26,10 +26,10 @@ requirements:
 
 source:
   url: https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-{{ arch }}/cudnn-linux-{{ arch }}-{{ version }}_cuda{{ cuda_major }}-archive.tar.xz
-  sha256: 79d77a769c7e7175abc7b5c2ed5c494148c0618a864138722c887f95c623777c  # [x86_64 and cudatoolkit == '12.2']
-  sha256: af7584cae0cc5524b5913ef08c29ba6154113c60eb0a37a0590a91b515a8a8f9  # [x86_64 and cudatoolkit == '11.8']
-  sha256: d086003d09d5388aa42142f07483a773aa74b602478b0933e24fc63f56f1658f  # [ppc64le and cudatoolkit == '11.8']
-  sha256: b0e89021a846952cad8cfc674edce2883f6e344ebd47a2394f706b1136715bc7  # [ppc64le and cudatoolkit == '12.2']
+  sha256: ccafd7d15c2bf26187d52d79d9ccf95104f4199980f5075a7c1ee3347948ce32  # [x86_64 and cuda_major == '12']
+  sha256: 39883d1bcab4bd2bf3dac5a2172b38533c1e777e45e35813100059e5091406f6  # [x86_64 and cuda_major == '11']
+  sha256: 4f5e5bd01570c4805b93fb199f8bb6f8475d016948c55abf48fed9ffe89d13e5  # [ppc64le and cuda_major == '12']
+  sha256: cc3267d7a6016949fa62a8f48184a7316a4798f0c192809c8184e441778fe0ce  # [ppc64le and cuda_major == '11']
   folder: cudnn
 
 test:
